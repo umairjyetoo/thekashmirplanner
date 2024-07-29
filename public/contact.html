@@ -118,7 +118,7 @@
             });
     
             try {
-                const response = await fetch(`${process.env.BACK_URL}/send-email`, {
+                const response = await fetch(`https://thekashmirplanner.vercel.app/send-email`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
