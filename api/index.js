@@ -35,7 +35,8 @@ app.get('/api', (req, res) => {
 // Email sending endpoint
 app.post('/api/send-email', (req, res) => {
   console.log("Request Body:", req.body);
-  
+  console.log("USERNAME::", process.env.EMAIL_USER);
+console.log("PASSWORD::", process.env.EMAIL_PASS);
   const { name, phone, email, message } = req.body;
   const mailOptions = {
     from: email,
