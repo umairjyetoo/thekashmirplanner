@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config(); // Use dotenv to manage environment variables
+const path = require('path')
 
 const app = express();
 const port = 3002;
