@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config(); // Use dotenv to manage environment variables
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
 // Middleware
 app.use(cors());
@@ -18,6 +18,14 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER, // Email from environment variable
     pass: process.env.EMAIL_PASS  // Password from environment variable
   }
+});
+
+// Serve static files (if you have any CSS, JS, images, etc. in the same directory)
+app.use(express.static(__dirname));
+
+// Route to serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Email sending endpoint
