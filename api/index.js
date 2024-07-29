@@ -25,12 +25,12 @@ const transporter = nodemailer.createTransport({
 app.use(express.static(__dirname));
 
 // Route to serve index.html
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Email sending endpoint
-app.post('/send-email', (req, res) => {
+app.post('/api/send-email', (req, res) => {
   console.log("Request Body:", req.body);
   
   const { name, phone, email, message } = req.body;
