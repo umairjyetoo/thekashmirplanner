@@ -2,9 +2,11 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config(); // Use dotenv to manage environment variables
-const path = require('path')
 
+console.log("USERNAME::", process.env.EMAIL_USER);
+console.log("PASSWORD::", process.env.EMAIL_PASS);
 const app = express();
 const port = 3002;
 
@@ -24,6 +26,7 @@ const transporter = nodemailer.createTransport({
 // Serve static files (if you have any CSS, JS, images, etc. in the same directory)
 app.use(express.static(__dirname));
 
+
 // Route to serve index.html
 app.get('/api', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -34,7 +37,6 @@ app.post('/api/send-email', (req, res) => {
   console.log("Request Body:", req.body);
   
   const { name, phone, email, message } = req.body;
-
   const mailOptions = {
     from: email,
     to: process.env.EMAIL_USER,
