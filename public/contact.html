@@ -31,60 +31,35 @@
    <link rel="stylesheet" href="css/owl.carousel.min.css">
    <link rel="stylesheet" href="css/owl.theme.default.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   
+
+   <!-- Toastr CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
    <style>
-      /* Styling for the popup */
-      .popup {
-         display: none;
-         position: fixed;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         padding: 20px;
-         background-color: #fff;
-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-         z-index: 1000;
-         text-align: center;
+      .send_btn button {
+        background-color: #000; /* Black background */
+        color: #fff; /* White text */
+        border: 2px solid #000; /* Black border */
+        border-radius: 25px; /* Rounded corners */
+        padding: 12px 24px; /* Adjust padding as needed */
+        font-size: 16px; /* Font size */
+        font-weight: bold; /* Font weight */
+        cursor: pointer; /* Pointer cursor */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+        outline: none; /* Remove outline */
       }
-      .overlay {
-         display: none;
-         position: fixed;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-         background-color: rgba(0, 0, 0, 0.5);
-         z-index: 999;
+
+      .send_btn button:hover {
+        background-color: #333; /* Slightly lighter black on hover */
+        color: #fff; /* White text */
+        border-color: #333; /* Slightly lighter black border */
+        transform: scale(1.05); /* Slightly increase size */
       }
-      .popup-content {
-         margin-bottom: 20px;
-      }
-      .close-btn {
-         background-color: #3498db;
-         color: #fff;
-         padding: 10px 20px;
-         border: none;
-         border-radius: 5px;
-         cursor: pointer;
-      }
-      .loader {
-         display: none;
-         position: fixed;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         border: 16px solid #f3f3f3; /* Light grey */
-         border-top: 16px solid #3498db; /* Blue */
-         border-radius: 50%;
-         width: 120px;
-         height: 120px;
-         animation: spin 2s linear infinite;
-         z-index: 1001;
-      }
-      
-      @keyframes spin {
-         0% { transform: rotate(0deg); }
-         100% { transform: rotate(360deg); }
+
+      /* Optional: Add a focus style for better accessibility */
+      .send_btn button:focus {
+        outline: 2px solid #fff; /* White outline for focus */
+        outline-offset: 2px; /* Space between outline and button */
       }
    </style>
 </head>
@@ -107,30 +82,42 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-    var socialLinks = document.querySelectorAll('.social_icon .social-link');
-    socialLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            var href = link.getAttribute('href');
-            if (!href || href === '#') {
-                event.preventDefault();
-                showPopup(event);
-            }
+            var socialLinks = document.querySelectorAll('.social_icon .social-link');
+            socialLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    var href = link.getAttribute('href');
+                    if (!href || href === '#') {
+                        event.preventDefault();
+                        showPopup(event);
+                    }
+                });
+            });
         });
-    });
-});
     
         async function sendEmail(event) {
             event.preventDefault();
-            document.getElementById('loader').style.display = 'block'; // Show loader
-    
+
+            const loader = document.getElementById('loader');
+            const overlay = document.getElementById('overlay');
+            const popup = document.getElementById('popup');
+
+            // Check if elements exist
+            if (!loader || !overlay || !popup) {
+                console.error('One or more elements not found');
+                return;
+            }
+
+            loader.style.display = 'block'; // Show loader
+
             const form = document.getElementById('contactForm');
             const formData = new FormData(form);
             const data = {};
             formData.forEach((value, key) => {
                 data[key] = value;
             });
-    
+
             try {
+                console.log("REQUEST BODY::", data);
                 const response = await fetch(`https://thekashmirplanner.vercel.app/api/send-email`, {
                     method: 'POST',
                     headers: {
@@ -138,22 +125,23 @@
                     },
                     body: JSON.stringify(data)
                 });
-    
+
                 if (response.ok) {
-                    showPopup('Email sent successfully!', true);
+                    toastr.success('Email sent successfully!');
+                    form.reset(); // Reset form on success
                 } else {
                     const errorText = await response.text();
-                    showPopup('Failed to send email: ' + errorText, false);
+                    console.error('Response Error:', errorText); // Log error response
+                    toastr.error('Failed to send email: ' + errorText);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                showPopup('An error occurred: ' + error.message, false);
+                console.error('Error:', error); // Log fetch error
+                toastr.error('An error occurred: ' + error.message);
             } finally {
-                document.getElementById('loader').style.display = 'none'; // Hide loader
+                loader.style.display = 'none'; // Hide loader
             }
         }
     </script>
-    
 
    <!-- header section start -->
    <div class="header_section">
@@ -219,7 +207,9 @@
                <div class="form-group">
                   <textarea id="message" class="massage-bt" placeholder="Message" rows="5" name="message" required></textarea>
                </div>
-               <div class="send_btn"><button type="submit">SEND</button></div>
+               <div class="send_btn">
+                  <button type="submit"><span>SEND</span></button>
+               </div>
             </div>
          </form>
       </div>
@@ -227,56 +217,61 @@
    <!-- contact section end -->
 
    <!-- footer section start -->
-<div class="footer_section layout_padding">
-   <h1 style="text-align: center; color: #fff; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bold; text-decoration: underline; height: 10px;">
-      Contact Details
-   </h1>
-   <div class="container">
-      <!-- Popup and overlay elements -->
-      <div class="overlay" id="overlay"></div>
-      <div class="popup" id="popup">
-         <div class="popup-content">
-            <p>We will be coming soon on this platform...</p>
+   <div class="footer_section layout_padding">
+      <h1 style="text-align: center; color: #fff; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bold; text-decoration: underline; height: 10px;">
+         Contact Details
+      </h1>
+      <div class="container">
+         <!-- Popup and overlay elements -->
+         <div class="overlay" id="overlay"></div>
+         <div class="popup" id="popup">
+             <div id="popup-content" class="popup-content">
+                 <p>We will be coming soon on this platform...</p>
+             </div>
+             <button class="close-btn" onclick="closePopup()">Close</button>
          </div>
-         <button class="close-btn" onclick="closePopup()">Close</button>
-      </div>
-
-      <div class="location_main">
-         <div class="call_text"><img src="images/call-icon.png"></div>
-         <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
-         <div class="call_text"><img src="images/mail-icon.png"></div>
-         <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
-      </div>
-      <div class="social_icon">
-         <ul>
-            <li><a href="https://www.facebook.com/profile.php?id=61561781076789&mibextid=ZbWKwL" class="social-link" target="_blank"><img src="images/fb-icon.png"></a></li>
-            <li><a href="#" class="social-link"><img src="images/twitter-icon.png"></a></li>
-            <li><a href="#" class="social-link"><img src="images/linkedin-icon.png"></a></li>
-            <li><a href="https://www.instagram.com/the_kashmir_planner?igsh=MWtrODlrOTI4em00bg==" class="social-link" target="_blank"><img src="images/instagram-icon.png"></a></li>
-         </ul>
+         <div id="loader" style="display: none;">Loading...</div>
+         
+         <div class="location_main">
+            <div class="call_text"><img src="images/call-icon.png"></div>
+            <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
+            <div class="call_text"><img src="images/mail-icon.png"></div>
+            <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
+         </div>
+         <div class="social_icon">
+            <ul>
+               <li><a href="https://www.facebook.com/profile.php?id=61561781076789&mibextid=ZbWKwL" class="social-link" target="_blank"><img src="images/fb-icon.png"></a></li>
+               <li><a href="#" class="social-link"><img src="images/twitter-icon.png"></a></li>
+               <li><a href="#" class="social-link"><img src="images/linkedin-icon.png"></a></li>
+               <li><a href="https://www.instagram.com/the_kashmir_planner?igsh=MWtrODlrOTI4em00bg==" class="social-link" target="_blank"><img src="images/instagram-icon.png"></a></li>
+            </ul>
+         </div>
       </div>
    </div>
-</div>
-<!-- footer section end -->
+   <!-- footer section end -->
 
- <!-- copyright section start -->
- <div class="copyright_section">
-    <div class="container">
-       <p class="copyright_text">2024 All Rights Reserved. Design by <a href="https://google.com">The Kashmir Planner</a></p>
-    </div>
- </div>
- <!-- copyright section end -->
- <!-- Javascript files-->
- <script src="js/jquery.min.js"></script>
- <script src="js/popper.min.js"></script>
- <script src="js/bootstrap.bundle.min.js"></script>
- <script src="js/jquery-3.0.0.min.js"></script>
- <script src="js/plugin.js"></script>
- <!-- sidebar -->
- <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
- <script src="js/custom.js"></script>
- <!-- javascript --> 
- <script src="js/owl.carousel.js"></script>
- <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>    
+   <!-- copyright section start -->
+   <div class="copyright_section">
+      <div class="container">
+         <p class="copyright_text">2024 All Rights Reserved. Design by <a href="https://google.com">The Kashmir Planner</a></p>
+      </div>
+   </div>
+   <!-- copyright section end -->
+   
+   <!-- Javascript files-->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/bootstrap.bundle.min.js"></script>
+   <script src="js/jquery-3.0.0.min.js"></script>
+   <script src="js/plugin.js"></script>
+   <!-- sidebar -->
+   <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+   <script src="js/custom.js"></script>
+   <!-- javascript --> 
+   <script src="js/owl.carousel.js"></script>
+   <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>    
+   
+   <!-- Toastr JS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>
