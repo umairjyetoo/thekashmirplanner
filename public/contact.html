@@ -105,6 +105,19 @@
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+    var socialLinks = document.querySelectorAll('.social_icon .social-link');
+    socialLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            var href = link.getAttribute('href');
+            if (!href || href === '#') {
+                event.preventDefault();
+                showPopup(event);
+            }
+        });
+    });
+});
     
         async function sendEmail(event) {
             event.preventDefault();
@@ -214,38 +227,38 @@
    <!-- contact section end -->
 
    <!-- footer section start -->
-   <div class="footer_section layout_padding">
-    <div class="container">
-       <div class="input_btn_main">
-          <input type="text" class="mail_text" placeholder="Enter your email" name="Enter your email">
-          <div class="subscribe_bt"><a href="#" onclick="showPopup(event)">Subscribe</a></div>
-       </div>
-        <!-- Popup and overlay elements -->
-        <div class="overlay" id="overlay"></div>
-        <div class="popup" id="popup">
-           <div class="popup-content" id="popup-content">
-               <!-- Popup message will be inserted here -->
-           </div>
-           <button class="close-btn" onclick="closePopup()">Close</button>
-        </div>
-        <div class="loader" id="loader"></div>
-       <div class="location_main">
-          <div class="call_text"><img src="images/call-icon.png"></div>
-          <div class="call_text"><a href="#">Call +91 78893 27827</a></div>
-          <div class="call_text"><img src="images/mail-icon.png"></div>
-          <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
-       </div>
-       <div class="social_icon">
-          <ul>
-             <li><a href="#"><img src="images/fb-icon.png"></a></li>
-             <li><a href="#"><img src="images/twitter-icon.png"></a></li>
-             <li><a href="#"><img src="images/linkedin-icon.png"></a></li>
-             <li><a href="#"><img src="images/instagram-icon.png"></a></li>
-          </ul>
-       </div>
-    </div>
- </div>
- <!-- footer section end -->
+<div class="footer_section layout_padding">
+   <h1 style="text-align: center; color: #fff; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bold; text-decoration: underline; height: 10px;">
+      Contact Details
+   </h1>
+   <div class="container">
+      <!-- Popup and overlay elements -->
+      <div class="overlay" id="overlay"></div>
+      <div class="popup" id="popup">
+         <div class="popup-content">
+            <p>We will be coming soon on this platform...</p>
+         </div>
+         <button class="close-btn" onclick="closePopup()">Close</button>
+      </div>
+
+      <div class="location_main">
+         <div class="call_text"><img src="images/call-icon.png"></div>
+         <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
+         <div class="call_text"><img src="images/mail-icon.png"></div>
+         <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
+      </div>
+      <div class="social_icon">
+         <ul>
+            <li><a href="https://www.facebook.com/profile.php?id=61561781076789&mibextid=ZbWKwL" class="social-link" target="_blank"><img src="images/fb-icon.png"></a></li>
+            <li><a href="#" class="social-link"><img src="images/twitter-icon.png"></a></li>
+            <li><a href="#" class="social-link"><img src="images/linkedin-icon.png"></a></li>
+            <li><a href="https://www.instagram.com/the_kashmir_planner?igsh=MWtrODlrOTI4em00bg==" class="social-link" target="_blank"><img src="images/instagram-icon.png"></a></li>
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- footer section end -->
+
  <!-- copyright section start -->
  <div class="copyright_section">
     <div class="container">

@@ -34,7 +34,7 @@
 
       <style>
          /* Styling for the popup */
-        .popup {
+         .popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -67,6 +67,23 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .btn_main.active a {
+            display: block; /* Ensure the link fills the button */
+            padding: 10px; /* Add padding for better text display */
+            white-space: nowrap; /* Prevent text wrapping */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
+            overflow: hidden; /* Hide overflow text */
+        }
+
+        /* Ensure buttons have a minimum width to accommodate longer text */
+        .btn_main {
+            min-width: 200px; /* Adjust as needed for the longest text */
+        }
+
+        .services_img {
+            max-width: 100%;
+        }
      </style>
    </head>
    <body>
@@ -81,6 +98,19 @@
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var socialLinks = document.querySelectorAll('.social_icon a');
+            socialLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    if (link.getAttribute('href') === '#') {
+                        event.preventDefault();
+                        document.getElementById('overlay').style.display = 'block';
+                        document.getElementById('popup').style.display = 'block';
+                    }
+                });
+            });
+        });
      </script>
       <!-- header section start -->
       <div class="header_section">
@@ -136,15 +166,15 @@
                <div class="row">
                   <div class="col-md-4">
                      <div><img src="images/img-1.png" class="services_img"></div>
-                     <div class="btn_main active"><a href="#">Airport Pickup/Drop</a></div>
+                     <div class="btn_main active"><a href="contact.html">Airport Pickup/Drop</a></div>
                   </div>
                   <div class="col-md-4">
                      <div><img src="images/img-2.png" class="services_img"></div>
-                     <div class="btn_main active"><a href="#">Hotel Bookings (As Required)</a></div>
+                     <div class="btn_main active"><a href="contact.html">Hotel Bookings (As Required)</a></div>
                   </div>
                   <div class="col-md-4">
                      <div><img src="images/img-3.png" class="services_img"></div>
-                     <div class="btn_main active"><a href="#">Tailored Holiday Packages</a></div>
+                     <div class="btn_main active"><a href="contact.html">Tailored Holiday Packages</a></div>
                   </div>
                </div>
             </div>
@@ -152,37 +182,39 @@
       </div>
       <!-- services section end -->
       <!-- footer section start -->
-      <div class="footer_section layout_padding">
-         <div class="container">
-            <div class="input_btn_main">
-               <input type="text" class="mail_text" placeholder="Enter your email" name="Enter your email">
-               <div class="subscribe_bt"><a href="#" onclick="showPopup(event)">Subscribe</a></div>
-            </div>
-                 <!-- Popup and overlay elements -->
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <p>You will be receiving offers from now.</p>
-        </div>
-        <button class="close-btn" onclick="closePopup()">Close</button>
-    </div>
-      
-            <div class="location_main">
-               <div class="call_text"><img src="images/call-icon.png"></div>
-               <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
-               <div class="call_text"><img src="images/mail-icon.png"></div>
-               <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
-            </div>
-            <div class="social_icon">
-               <ul>
-                  <li><a href="#"><img src="images/fb-icon.png"></a></li>
-                  <li><a href="#"><img src="images/twitter-icon.png"></a></li>
-                  <li><a href="#"><img src="images/linkedin-icon.png"></a></li>
-                  <li><a href="#"><img src="images/instagram-icon.png"></a></li>
-               </ul>
-            </div>
+      <!-- footer section start -->
+<div class="footer_section layout_padding">
+   <h1 style="text-align: center; color: #fff; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bold; text-decoration: underline; height: 10px;">
+      Contact Details
+   </h1>
+   <div class="container">
+      <!-- Popup and overlay elements -->
+      <div class="overlay" id="overlay"></div>
+      <div class="popup" id="popup">
+         <div class="popup-content">
+            <p>We will be coming soon on this platform...</p>
          </div>
+         <button class="close-btn" onclick="closePopup()">Close</button>
       </div>
+
+      <div class="location_main">
+         <div class="call_text"><img src="images/call-icon.png"></div>
+         <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
+         <div class="call_text"><img src="images/mail-icon.png"></div>
+         <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
+      </div>
+      <div class="social_icon">
+         <ul>
+            <li><a href="https://www.facebook.com/profile.php?id=61561781076789&mibextid=ZbWKwL" class="social-link" target="_blank"><img src="images/fb-icon.png"></a></li>
+            <li><a href="#" class="social-link"><img src="images/twitter-icon.png"></a></li>
+            <li><a href="#" class="social-link"><img src="images/linkedin-icon.png"></a></li>
+            <li><a href="https://www.instagram.com/the_kashmir_planner?igsh=MWtrODlrOTI4em00bg==" class="social-link" target="_blank"><img src="images/instagram-icon.png"></a></li>
+         </ul>
+      </div>
+   </div>
+</div>
+<!-- footer section end -->
+
       <!-- footer section end -->
       <!-- copyright section start -->
       <div class="copyright_section">

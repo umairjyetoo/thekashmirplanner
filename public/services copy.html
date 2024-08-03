@@ -9,7 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>About</title>
+      <title>Services</title>
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
@@ -31,10 +31,10 @@
       <link rel="stylesheet" href="css/owl.carousel.min.css">
       <link rel="stylesheet" href="css/owl.theme.default.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   
+
       <style>
          /* Styling for the popup */
-        .popup {
+         .popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -67,6 +67,24 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .btn_main.active a {
+            display: block; /* Ensure the link fills the button */
+            padding: 10px; /* Add padding for better text display */
+            white-space: nowrap; /* Prevent text wrapping */
+            text-overflow: ellipsis; /* Add ellipsis for overflow text */
+            overflow: hidden; /* Hide overflow text */
+        }
+
+        /* Ensure buttons have a minimum width to accommodate longer text */
+        .btn_main {
+            min-width: 200px; /* Adjust as needed for the longest text */
+        }
+
+        .services_img {
+            max-width: 100%;
+        }
+
      </style>
    </head>
    <body>
@@ -81,20 +99,6 @@
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
         }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-    var socialLinks = document.querySelectorAll('.social_icon .social-link');
-    socialLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            var href = link.getAttribute('href');
-            if (!href || href === '#') {
-                event.preventDefault();
-                showPopup(event);
-            }
-        });
-    });
-});
      </script>
       <!-- header section start -->
       <div class="header_section">
@@ -141,60 +145,63 @@
          </div>
       </div>
       <!-- header section end -->
-      <!-- about section start -->
-      <div class="about_section layout_padding">
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-md-6">
-                  <div class="about_taital_main">
-                     <h1 class="about_taital" >About Us</h1>
-                     <p class="about_text">The Kashmir Planner is your ultimate travel companion for exploring the breathtaking beauty of Kashmir. With a passion for curating unforgettable experiences, we specialize in personalized travel plans that showcase the region's rich culture, stunning landscapes, and hidden gems. Whether you're seeking a serene retreat, an adventurous trek, or a cultural immersion, our expert team is dedicated to making your dream journey come true. Trust The Kashmir Planner to guide you through the wonders of Kashmir, ensuring a seamless and memorable adventure from start to finish. </p>
-                     <div class="readmore_bt">
-                        <a href="index.html">Back to Home</a>
-                    </div>
-                    
+      <!-- services section start -->
+      <div class="services_section layout_padding">
+         <div class="container">
+            <h1 class="services_taital">Services </h1>
+            <p class="services_text">"Discover the beauty of Kashmir with The Kashmir Planner, your expert guide to unforgettable journeys in the paradise of the north."</p>
+            <div class="services_section_2">
+               <div class="row">
+                  <div class="col-md-4">
+                     <div><img src="images/img-1.png" class="services_img"></div>
+                     <div class="btn_main active"><a href="contact.html">Airport Pickup/Drop</a></div>
                   </div>
-               </div>
-               <div class="col-md-6 padding_right_0">
-                  <div><img src="images/about-img.png" class="about_img"></div>
+                  <div class="col-md-4">
+                     <div><img src="images/img-2.png" class="services_img"></div>
+                     <div class="btn_main active"><a href="contact.html">Hotel Bookings</a></div>
+                  </div>
+                  <div class="col-md-4">
+                     <div><img src="images/img-3.png" class="services_img"></div>
+                     <div class="btn_main active"><a href="contact.html">Holiday Packages</a></div>
+                  </div>
                </div>
             </div>
          </div>
       </div>
-      <!-- about section end -->
+      <!-- services section end -->
       <!-- footer section start -->
-<div class="footer_section layout_padding">
-   <h1 style="text-align: center; color: #fff; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bold; text-decoration: underline; height: 10px;">
-      Contact Details
-   </h1>
-   <div class="container">
-      <!-- Popup and overlay elements -->
-      <div class="overlay" id="overlay"></div>
-      <div class="popup" id="popup">
-         <div class="popup-content">
-            <p>We will be coming soon on this platform...</p>
+      <div class="footer_section layout_padding">
+         <div class="container">
+            <div class="input_btn_main">
+               <input type="text" class="mail_text" placeholder="Enter your email" name="Enter your email">
+               <div class="subscribe_bt"><a href="#" onclick="showPopup(event)">Subscribe</a></div>
+            </div>
+                 <!-- Popup and overlay elements -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>You will be receiving offers from now.</p>
+        </div>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+      
+            <div class="location_main">
+               <div class="call_text"><img src="images/call-icon.png"></div>
+               <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
+               <div class="call_text"><img src="images/mail-icon.png"></div>
+               <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
+            </div>
+            <div class="social_icon">
+               <ul>
+                  <li><a href="#"><img src="images/fb-icon.png"></a></li>
+                  <li><a href="#"><img src="images/twitter-icon.png"></a></li>
+                  <li><a href="#"><img src="images/linkedin-icon.png"></a></li>
+                  <li><a href="#"><img src="images/instagram-icon.png"></a></li>
+               </ul>
+            </div>
          </div>
-         <button class="close-btn" onclick="closePopup()">Close</button>
       </div>
-
-      <div class="location_main">
-         <div class="call_text"><img src="images/call-icon.png"></div>
-         <div class="call_text"><a href="#">Call +91 788 9327 827</a></div>
-         <div class="call_text"><img src="images/mail-icon.png"></div>
-         <div class="call_text"><a href="#">thekashmirplanner@gmail.com</a></div>
-      </div>
-      <div class="social_icon">
-         <ul>
-            <li><a href="https://www.facebook.com/profile.php?id=61561781076789&mibextid=ZbWKwL" class="social-link" target="_blank"><img src="images/fb-icon.png"></a></li>
-            <li><a href="#" class="social-link"><img src="images/twitter-icon.png"></a></li>
-            <li><a href="#" class="social-link"><img src="images/linkedin-icon.png"></a></li>
-            <li><a href="https://www.instagram.com/the_kashmir_planner?igsh=MWtrODlrOTI4em00bg==" class="social-link" target="_blank"><img src="images/instagram-icon.png"></a></li>
-         </ul>
-      </div>
-   </div>
-</div>
-<!-- footer section end -->
-
+      <!-- footer section end -->
       <!-- copyright section start -->
       <div class="copyright_section">
          <div class="container">
